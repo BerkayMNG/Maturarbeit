@@ -101,11 +101,11 @@ for nm in range(1000):
             if truecount == 2:
                 f = 4
             if truecount == 3:
-                f = 6
-            if truecount == 4:
                 f = 8
-            if truecount == 5:
+            if truecount == 4:
                 f = 10
+            if truecount == 5:
+                f = 12
 
             if truecount < 0:
                 f = 1
