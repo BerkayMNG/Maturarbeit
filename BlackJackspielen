@@ -54,33 +54,34 @@ def value(list):
 # Das Ass zählt dabei immer als 11, es sei denn die Bank überkaufe sich
 # D.h; Es gibt nie 2 Asse die 11 zählen
 # Das Ass zählt 11, wenn die Summe davor kleiner als 11 ist
-def bank(list):
-    if "A" in list:
+def bank(s):
+    d = s.copy()
+    lk = s.copy()
 
-        h = list.copy()
-        lk = list.copy()
+    if "A" in d:
+        d.remove("A")
+        for n , i in enumerate(d):
 
-        ba = h[:h.index("A")]
-        sum(ba)
-        if sum(ba) < 11:
 
-            lk[list.index("A")] = 11
-        else:
-            lk[list.index("A")] = 1
+            if i == "A":
+                d[n] = 1
 
-        if "A" in list:
+        if sum(d) > 10:
             for n, i in enumerate(lk):
                 if i == "A":
                     lk[n] = 1
-            bv = sum(lk)
+            return sum(lk)
+
         else:
-            bv = sum(lk)
+            lk[lk.index("A")] = 11
+            for n, i in enumerate(lk):
+                if i == "A":
+                    lk[n] = 1
 
-        return bv
+            return sum(lk)
+
     else:
-        bv = sum(list)
-
-    return bv
+        return sum(s)
 
 #Hier wird nicht das ganze Deck durchgespielt. Ab etwa einem Drittel wird das Spiel beendet
 #Beim weiterspielen muss das Programm wieder laufen gelassen werden
@@ -107,8 +108,8 @@ while len(deck)>100:
     for i in sp:
         deck.remove(i)
     cp = random.sample(deck, 1)
-    for x in cp:
-        deck.remove(x)
+    for i in sp:
+        deck.remove(i)
 
     print("Der Spieler hat folgende Karten erhalten:")
     print(sp)
