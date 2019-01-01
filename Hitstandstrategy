@@ -1,0 +1,197 @@
+import random
+
+
+deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, "A"] * 4 * 6
+
+
+
+def hit(x, list):
+    s = random.sample(list, 1)
+    list.remove(s[0])
+    x.append(s[0])
+    del(s)
+
+
+def value(list):
+    if "A" in list:
+
+        z = list.copy()
+
+        z.remove("A")
+
+        for n, i in enumerate(z):
+            if i == "A":
+                z[n] = 1
+
+        if sum(z) < 11:
+
+            v = sum(z) + 11
+        else:
+            v = sum(z) + 1
+
+        return v
+
+
+    else:
+
+        v = sum(list)
+
+    return v
+
+def bank(s):
+    d = s.copy()
+    lk = s.copy()
+
+    if "A" in d:
+        d.remove("A")
+        for n, i in enumerate(d):
+
+
+            if i == "A":
+                d[n] = 1
+
+        if sum(d) > 10:
+            for n, i in enumerate(lk):
+                if i == "A":
+                    lk[n] = 1
+            return sum(lk)
+
+        else:
+            lk[lk.index("A")] = 11
+            for n, i in enumerate(lk):
+                if i == "A":
+                    lk[n] = 1
+
+            return sum(lk)
+
+    else:
+        return sum(lk)
+
+def softhand(list):
+    if "A" in list:
+        q = list.copy()
+        for n, i in enumerate(q):
+            if i == "A":
+                q[n] = 1
+
+        if sum(q) == value(list):
+            return False
+        else:
+            return True
+    else:
+        return False
+
+liste =[]
+
+r = 0
+for nm in range(10000):
+    pl = 0
+    deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, "A"] * 4 * 6
+    runc = 0
+    while len(deck) > 100:
+
+        f = 1
+
+        r = r+1
+
+        sp = random.sample(deck, 2)
+        for i in sp:
+            deck.remove(i)
+        cp = random.sample(deck, 1)
+        for x in cp:
+            deck.remove(x)
+
+
+
+        x = 0
+        while x != 1:
+
+            if softhand(sp) == True:
+
+                if cp[0] == 2 and value(sp) < 18:
+                    hit(sp, deck)
+                if cp[0] == 3 and value(sp) < 18:
+                    hit(sp, deck)
+                if cp[0] == 4 and value(sp) < 18:
+                    hit(sp, deck)
+                if cp[0] == 5 and value(sp) < 18:
+                    hit(sp, deck)
+                if cp[0] == 6 and value(sp) < 18:
+                    hit(sp, deck)
+                if cp[0] == 7 and value(sp) < 18:
+                    hit(sp, deck)
+                if cp[0] == 8 and value(sp) < 18:
+                    hit(sp, deck)
+                if cp[0] == 9 and value(sp) < 19:
+                    hit(sp, deck)
+                if cp[0] == 10 and value(sp) < 19:
+                    hit(sp, deck)
+                if cp[0] == "A" and value(sp) < 19:
+                    hit(sp, deck)
+                else:
+                    x = 1
+
+            if softhand(sp) == False:
+
+                if cp[0] == 2 and value(sp) < 13:
+                    hit(sp, deck)
+                if cp[0] == 3 and value(sp) < 13:
+                    hit(sp, deck)
+                if cp[0] == 4 and value(sp) < 12:
+                    hit(sp, deck)
+                if cp[0] == 5 and value(sp) < 12:
+                    hit(sp, deck)
+                if cp[0] == 6 and value(sp) < 12:
+                    hit(sp, deck)
+                if cp[0] == 7 and value(sp) < 17:
+                    hit(sp, deck)
+                if cp[0] == 8 and value(sp) < 17:
+                    hit(sp, deck)
+                if cp[0] == 9 and value(sp) < 17:
+                    hit(sp, deck)
+                if cp[0] == 10 and value(sp) < 17:
+                    hit(sp, deck)
+                if cp[0] == "A" and value(sp) < 17:
+                    hit(sp, deck)
+                else:
+                    x = 1
+
+
+
+        while bank(cp) < 17:
+            hit(cp, deck)
+
+        pl = 0
+        if value(sp) != 21 and bank(cp) != 21:
+            if value(sp) < 21 and bank(cp) > 21:
+                pl =  f
+            if value(sp) > 21 and bank(cp) > 21:
+                pl = - f
+            if value(sp) > 21 and bank(cp) < 22:
+                pl = - f
+            if value(sp) < 22 and bank(cp) < 22:
+                if value(sp) > bank(cp):
+                    pl =  f
+                if value(sp) < bank(cp):
+                    pl = pl - f
+        if value(sp) == 21 and bank(cp) == 21:
+            if len(sp) != 2 and len(cp) == 2:
+                pl = - f
+            if len(sp) == 2 and len(cp) != 2:
+                pl = 1.5*f
+        if value(sp) == 21 and bank(cp) != 21:
+            if len(sp) != 2:
+                pl = f
+            if len(sp) == 2:
+                pl = 1.5 * f
+        if value(sp) != 21 and bank(cp) == 21:
+                pl = - f
+
+
+        del(cp)
+        del(sp)
+
+        liste.append(pl)
+
+print(sum(liste)/r)
+print(r)
