@@ -104,7 +104,7 @@ for nm in range(1000):
                 f = 8
             if truecount == 4:
                 f = 10
-            if truecount == 5:
+            if truecount > 5:
                 f = 12
 
             if truecount < 0:
